@@ -2,6 +2,8 @@
 #import "@preview/cuti:0.3.0": show-cn-fakebold
 #import "@preview/codly:1.3.0": *
 #import "H2-slide.typ": *
+#import "table.typ": *
+
 
 #let blank-slide(config: (:), ..args) = touying-slide-wrapper(self => {
   let self = utils.merge-dicts(
@@ -44,10 +46,11 @@
     config: utils.merge-dicts(config, config-common(freeze-slide-counter: true)),
     setting: setting,
   )[
+    #set text(size: 50pt, font: "SimHei")
 
     #place(
       horizon,
-      image("../Figures/bg.png", width: 120%),
+      image("../images/bg.png", width: 120%),
       dy: 175pt,
     )
     #body
@@ -76,7 +79,7 @@
     [
       #place(
         horizon + center,
-        image("../Figures/logo_cug.png", width: auto),
+        image("../images/logo_cug.png", width: auto),
         // dx: 300pt,
         dy: 30pt,
       )
@@ -87,24 +90,29 @@
     ],
     [
       #v(8.5em)
-      #image("../Figures/bg.png", width: 120%)
+      #image("../images/bg.png", width: 120%)
     ],
   )
 ])
 
 
-#let my-theme(self: none, body) = {
-  set text(size: 18pt)
+#let my-theme(self: none, size: 22pt, body) = {
+  set text(size: size, font: ("Times New Roman", "FangSong"))
   set par(leading: 1em, spacing: 1em)
   show: show-cn-fakebold
 
   set math.equation(numbering: none) //"(1)"
-  show math.equation: set text(size: 15pt)
+  show math.equation: set text(size: 1em)
   show math.equation.where(block: true): set par(spacing: 0.7em, leading: 0.5em)
 
   show footnote.entry: set text(size: 1.5em)
   // show heading: set text(20pt)
   show heading.where(level: 3): it => {}
+  show table: set-table
+
+  // 链接
+  show link: underline
+  show link: set text(fill: rgb(0, 0, 255))
 
   set figure.caption(separator: "")
   // set figure(numbering: num => numbering("1", num))
@@ -115,7 +123,7 @@
     it
   }
 
-  show raw: set text(font: ("consolas", "Microsoft Yahei", "SimSun"), size: 10pt)
+  show raw: set text(font: ("consolas", "Microsoft Yahei", "SimSun"), size: 0.8em)
   show: codly-init.with()
   codly(stroke: 1pt + blue)
   codly(display-icon: true)

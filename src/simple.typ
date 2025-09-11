@@ -77,7 +77,7 @@
       },
     ),
   )
-  
+
   touying-slide(self: self, config: config, repeat: repeat, setting: setting, composer: composer, ..bodies)
 })
 
@@ -139,6 +139,7 @@
 
 #let simple-theme(
   aspect-ratio: "16-9",
+  size: 18pt,
   subslide-preamble: block(
     below: 1.5em,
     text(1.2em, weight: "bold", utils.display-current-heading(level: 3)),
@@ -169,7 +170,9 @@
       zero-margin-footer: false,
     ),
     config-methods(
-      init: my-theme,
+      init: (self: none, body) => {
+        my-theme(self:self, size:size, body)
+      },
       // alert: utils.alert-with-primary-color,
     ),
     config-colors(

@@ -1,23 +1,18 @@
 #import "@preview/touying:0.6.1": *
 
 
-#let L2-slide(config: (:), ..args) = touying-slide-wrapper(self => {
+#let H2-slide(config: (:), ..args) = touying-slide-wrapper(self => {
   let deco-format(it) = text(size: .6em, fill: gray, it)
 
-  // let header = self => utils.display-current-heading(
-  //   setting: utils.fit-to-width.with(grow: false, 100%),
-  //   level: 1,
-  //   depth: self.slide-level,
-  // )
+  let subslide-preamble = block(
+    below: 1.5em,
+    text(1.2em, fill: blue.darken(60%), weight: "bold", utils.display-current-heading(level: 2)),
+  )
+
   let header = self => utils.display-current-heading(
     setting: utils.fit-to-width.with(grow: false, 100%),
     level: 1,
     depth: self.slide-level,
-  )
-
-  let subslide-preamble = block(
-    below: 1.5em,
-    text(1.2em, weight: "bold", utils.display-current-heading(level: 2)),
   )
 
   let self = utils.merge-dicts(
@@ -50,17 +45,24 @@
     )
   }
 
-
   let self = utils.merge-dicts(
     self,
+    config-store(
+      subslide-preamble: subslide-preamble,
+    ),
+    // config-methods(
+    //   init: (self: none, body) => {
+    //     my-theme(self: self, size: size, body)
+    //   },
+    //   // alert: utils.alert-with-primary-color,
+    // ),
     config-page(
       header: header,
       footer: footer,
     ),
-
     config-common(subslide-preamble: it => {
       v(0.1em)
-      self.store.subslide-preamble
+      subslide-preamble
       v(-1.0em)
       let length = 97%
       line(length: length, stroke: 0.15pt + blue)
@@ -69,7 +71,7 @@
     }),
   )
   // set par(leading: 1em, spacing: 1em)
-  set text(font: ("Times New Roman", "SimHei"))
+  // set text(font: ("Times New Roman", "SimHei"))
 
   touying-slide(
     self: self,
