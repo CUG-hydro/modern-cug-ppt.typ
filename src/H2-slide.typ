@@ -62,7 +62,7 @@
     ),
     config-common(subslide-preamble: it => {
       v(0.1em)
-      subslide-preamble
+      self.store.subslide-preamble
       v(-1.0em)
       let length = 97%
       line(length: length, stroke: 0.15pt + blue)
